@@ -1,6 +1,10 @@
+import 'package:catalyst/UI/Screens/Home/home.dart';
 import 'package:flutter/material.dart';
 
+import 'di.dart';
+
 void main() {
+  configureDependencies();
   runApp(const MyApp());
 }
 
@@ -13,7 +17,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Catalyst',
       debugShowCheckedModeBanner: false,
-
+      routes: {
+        HomePage.routeName : (_) => const HomePage(),
+      },
+      initialRoute: HomePage.routeName,
     );
   }
 }
