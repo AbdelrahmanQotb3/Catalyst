@@ -1,14 +1,24 @@
-/// id : 39
-/// name : "Otis O'Kon"
-/// email : "yundt.adrain@example.net"
-/// phone : "+1 (820) 376-4124"
-/// role : "admin"
+/// id : 70
+/// name : "Ms. Vita Jacobs"
+/// email : "dkshlerin@example.com"
+/// phone : "1-570-401-1078"
+/// role : "owner"
 /// profile_image : "https://bio3.catalyst.com.eg/public/Catalyst_portfolio/IMG_0997%20(1).jpg"
 /// intro_video : "https://bio3.catalyst.com.eg/public/Catalyst_portfolio/techtest.mp4"
 /// created_at : "2025-01-07T20:41:31.000000Z"
 /// updated_at : "2025-01-07T20:41:31.000000Z"
 
 class GetSpecificUser {
+  final num id;
+  final String name;
+  final String email;
+  final String phone;
+  final String role;
+  final String profileImage;
+  final String introVideo;
+  final String createdAt;
+  final String updatedAt;
+
   GetSpecificUser({
     required this.id,
     required this.name,
@@ -21,26 +31,19 @@ class GetSpecificUser {
     required this.updatedAt,
   });
 
-  GetSpecificUser.fromJson(Map<String, dynamic> json)
-      : id = json['id'] as num?,
-        name = json['name'] as String?,
-        email = json['email'] as String?,
-        phone = json['phone'] as String?,
-        role = json['role'] as String?,
-        profileImage = json['profile_image'] as String?,
-        introVideo = json['intro_video'] as String?,
-        createdAt = json['created_at'] as String?,
-        updatedAt = json['updated_at'] as String?;
-
-  final num? id;
-  final String? name;
-  final String? email;
-  final String? phone;
-  final String? role;
-  final String? profileImage;
-  final String? introVideo;
-  final String? createdAt;
-  final String? updatedAt;
+  factory GetSpecificUser.fromJson(Map<String, dynamic> json) {
+    return GetSpecificUser(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      email: json['email'] ?? '',
+      phone: json['phone'] ?? '',
+      role: json['role'] ?? '',
+      profileImage: json['profile_image'] ?? '',
+      introVideo: json['intro_video'] ?? '',
+      createdAt: json['created_at'] ?? '',
+      updatedAt: json['updated_at'] ?? '',
+    );
+  }
 
   GetSpecificUser copyWith({
     num? id,
