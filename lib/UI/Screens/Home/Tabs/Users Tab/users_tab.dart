@@ -75,20 +75,37 @@ class _UsersTabState extends State<UsersTab> {
           SizedBox(
             width: 10,
           ),
-          Column(
-            children: [
-              Flexible(
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
                   child: Text(
-                user.name!,
-                style: AppConstants.userName,
-                overflow: TextOverflow.ellipsis,
-              )),
-              Text(user.role! , style: AppConstants.userName.copyWith(fontSize: 17),),
-              Text(user.phone! , style: AppConstants.userName.copyWith(fontSize: 17),),
-              Text("${user.id}" , style: AppConstants.userName.copyWith(fontSize: 17),)
-            ],
+                    user.name!,
+                    style: AppConstants.userName,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+                Text(
+                  user.role!,
+                  style: AppConstants.userName.copyWith(fontSize: 17),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                Text(
+                  user.phone!,
+                  style: AppConstants.userName.copyWith(fontSize: 17),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                Text(
+                  "${user.id}",
+                  style: AppConstants.userName.copyWith(fontSize: 17),
+                ),
+              ],
+            ),
           ),
-
         ],
       ),
     );
