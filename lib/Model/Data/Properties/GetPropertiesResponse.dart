@@ -17,7 +17,7 @@ class GetPropertiesResponse {
   final String description;
   final String price;
   final String location;
-  final String images;
+  final List<String> images; // Changed from String to List<String>
   final String video;
   final String createdAt;
   final String updatedAt;
@@ -45,58 +45,13 @@ class GetPropertiesResponse {
       description: json['description'] ?? '',
       price: json['price'] ?? '',
       location: json['location'] ?? '',
-      images: json['images'] ?? '',
+      images: json['images'] is List ? List<String>.from(json['images']) : [],
       video: json['video'] ?? '',
       createdAt: json['created_at'] ?? '',
       updatedAt: json['updated_at'] ?? '',
       user: json['user'] != null ? User.fromJson(json['user']) : null,
     );
-  }
-
-  GetPropertiesResponse copyWith({
-    num? id,
-    num? userId,
-    String? name,
-    String? description,
-    String? price,
-    String? location,
-    String? images,
-    String? video,
-    String? createdAt,
-    String? updatedAt,
-    User? user,
-  }) {
-    return GetPropertiesResponse(
-      id: id ?? this.id,
-      userId: userId ?? this.userId,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      price: price ?? this.price,
-      location: location ?? this.location,
-      images: images ?? this.images,
-      video: video ?? this.video,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      user: user ?? this.user,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'user_id': userId,
-      'name': name,
-      'description': description,
-      'price': price,
-      'location': location,
-      'images': images,
-      'video': video,
-      'created_at': createdAt,
-      'updated_at': updatedAt,
-      if (user != null) 'user': user!.toJson(),
-    };
-  }
-}
+  }}
 
 /// id : 774
 /// name : "Agnes Murray"
