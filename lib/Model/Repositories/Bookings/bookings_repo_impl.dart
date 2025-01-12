@@ -39,11 +39,10 @@ class BookingsRepoImpl extends BookingsRepo{
               .map((e) => GetBookingsResponse.fromJson(e as Map<String, dynamic>))
               .toList();
         } else {
-          throw Exception(
-              "Error: ${response.statusCode}, Message: ${response.body}");
+          throw AppConstants.defaultMessageError;
         }
       } else {
-        throw Exception(AppConstants.internetErrorMessage);
+        throw AppConstants.internetErrorMessage;
       }
     } catch (e) {
       print("Error in getAllBookings: $e");
