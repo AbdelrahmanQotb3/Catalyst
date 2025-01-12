@@ -27,24 +27,30 @@ class BookingsRepoImpl extends BookingsRepo{
   }
 
   @override
-  Future getAllBookings() async{
-    if(await internetConnection.hasConnection){
-      Response response = await get(Uri.parse(EndPoint.retrieveBookingsApi));
-      List<GetBookingsResponse> bookings = (jsonDecode(response.body) as List)
-          .map((e) => GetBookingsResponse.fromJson(e as Map<String, dynamic>))
-          .toList();
-      if(response.statusCode >= 200 && response.statusCode < 300){
-        print("API Done");
-        return bookings;
+  @override
+  Future<List<GetBookingsResponse>> getAllBookings() async {
+    try {
+      if (await internetConnection.hasConnection) {
+        Response response = await get(Uri.parse(EndPoint.retrieveBookingsApi));
+        if (response.statusCode >= 200 && response.statusCode < 300) {
+          print("API Done");
+          final List<dynamic> jsonData = jsonDecode(response.body);
+          return jsonData
+              .map((e) => GetBookingsResponse.fromJson(e as Map<String, dynamic>))
+              .toList();
+        } else {
+          throw Exception(
+              "Error: ${response.statusCode}, Message: ${response.body}");
+        }
+      } else {
+        throw Exception(AppConstants.internetErrorMessage);
       }
-      else{
-        throw AppConstants.defaultMessageError;
-      }
-    }
-    else{
-      throw AppConstants.internetErrorMessage;
+    } catch (e) {
+      print("Error in getAllBookings: $e");
+      rethrow;
     }
   }
+
 
   @override
   Future updateBooking(String id) {

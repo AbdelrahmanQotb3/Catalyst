@@ -27,18 +27,19 @@ class GetBookingsResponse {
   // Factory constructor for JSON deserialization
   factory GetBookingsResponse.fromJson(Map<String, dynamic> json) {
     return GetBookingsResponse(
-      id: json['id'] as num,
-      userId: json['user_id'] as num,
-      propertyId: json['property_id'] as num,
-      startDate: json['start_date'] as String,
-      endDate: json['end_date'] as String,
-      status: json['status'] as String,
-      createdAt: json['created_at'] as String,
-      updatedAt: json['updated_at'] as String,
-      user: json['user'] != null ? User.fromJson(json['user']) : throw Exception('User data is missing'),
-      property: json['property'] != null ? Property.fromJson(json['property']) : throw Exception('Property data is missing'),
+      id: json['id'] as num? ?? 0,
+      userId: json['user_id'] as num? ?? 0,
+      propertyId: json['property_id'] as num? ?? 0,
+      startDate: json['start_date'] as String? ?? "",
+      endDate: json['end_date'] as String? ?? "",
+      status: json['status'] as String? ?? "",
+      createdAt: json['created_at'] as String? ?? "",
+      updatedAt: json['updated_at'] as String? ?? "",
+      user: json['user'] != null ? User.fromJson(json['user']) : User.empty(),
+      property: json['property'] != null ? Property.fromJson(json['property']) : Property.empty(),
     );
   }
+
 
   // Fields
   final num id;
@@ -126,18 +127,34 @@ class Property {
   // Factory constructor for JSON deserialization
   factory Property.fromJson(Map<String, dynamic> json) {
     return Property(
-      id: json['id'] as num,
-      userId: json['user_id'] as num,
-      name: json['name'] as String,
-      description: json['description'] as String,
-      price: json['price'] as String,
-      location: json['location'] as String,
-      images: json['images'] as String,
-      video: json['video'] as String,
-      createdAt: json['created_at'] as String,
-      updatedAt: json['updated_at'] as String,
+      id: json['id'] as num? ?? 0,
+      userId: json['user_id'] as num? ?? 0,
+      name: json['name'] as String? ?? "",
+      description: json['description'] as String? ?? "",
+      price: json['price'] as String? ?? "",
+      location: json['location'] as String? ?? "",
+      images: json['images'] as String? ?? "[]",
+      video: json['video'] as String? ?? "",
+      createdAt: json['created_at'] as String? ?? "",
+      updatedAt: json['updated_at'] as String? ?? "",
     );
   }
+
+  static Property empty() {
+    return Property(
+      id: 0,
+      userId: 0,
+      name: "",
+      description: "",
+      price: "",
+      location: "",
+      images: "[]",
+      video: "",
+      createdAt: "",
+      updatedAt: "",
+    );
+  }
+
 
   // Fields
   final num id;
@@ -223,15 +240,29 @@ class User {
   // Factory constructor for JSON deserialization
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'] as num,
-      name: json['name'] as String,
-      email: json['email'] as String,
-      phone: json['phone'] as String,
-      role: json['role'] as String,
-      profileImage: json['profile_image'] as String,
-      introVideo: json['intro_video'] as String,
-      createdAt: json['created_at'] as String,
-      updatedAt: json['updated_at'] as String,
+      id: json['id'] as num? ?? 0,
+      name: json['name'] as String? ?? "",
+      email: json['email'] as String? ?? "",
+      phone: json['phone'] as String? ?? "",
+      role: json['role'] as String? ?? "",
+      profileImage: json['profile_image'] as String? ?? "",
+      introVideo: json['intro_video'] as String? ?? "",
+      createdAt: json['created_at'] as String? ?? "",
+      updatedAt: json['updated_at'] as String? ?? "",
+    );
+  }
+
+  static User empty() {
+    return User(
+      id: 0,
+      name: "",
+      email: "",
+      phone: "",
+      role: "",
+      profileImage: "",
+      introVideo: "",
+      createdAt: "",
+      updatedAt: "",
     );
   }
 

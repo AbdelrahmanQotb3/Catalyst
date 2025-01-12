@@ -12,15 +12,22 @@ class BookingsTabViewModel extends Cubit<BookingsTabState>{
 
   Future<void> loadAllBookings() async {
     emit(state.copyWith(bookingsAPI: BaseScreenState.loading));
-    print("Loading");
-    try{
+    print("Loading bookings...");
+    try {
       List<GetBookingsResponse> bookings = await bookingsRepo.getAllBookings();
-      emit(state.copyWith(bookingsAPI: BaseScreenState.success , getBookingResponse: bookings));
-      print("Success");
-    }catch(exception){
-      emit(state.copyWith(bookingsAPI: BaseScreenState.failure , errorMessage: exception.toString()));
-      print("Error");
+      print("Bookings loaded: ${bookings.length}");
+      emit(state.copyWith(
+        bookingsAPI: BaseScreenState.success,
+        getBookingResponse: bookings,
+      ));
+    } catch (exception) {
+      print("Error loading bookings: $exception");
+      emit(state.copyWith(
+        bookingsAPI: BaseScreenState.failure,
+        errorMessage: exception.toString(),
+      ));
     }
   }
+
 
 }
