@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:catalyst/Model/Data/Properties/GetPropertiesResponse.dart';
+import 'package:catalyst/Model/Data/Properties/GetSpecificPropertyResponse.dart';
 import 'package:catalyst/Model/Repositories/Properties/properties_repo.dart';
 import 'package:catalyst/Utilities/app_constants.dart';
 import 'package:catalyst/Utilities/end_points.dart';
@@ -42,9 +43,19 @@ class PropertiesRepositoryImpl extends PropertiesRepository{
   }
 
   @override
-  Future getSpecificProperty(String id) {
-    // TODO: implement getSpecificProperty
-    throw UnimplementedError();
+  Future getSpecificProperty(num id) async{
+    if(await internetConnection.hasConnection){
+      Response response = await get(Uri.parse("${EndPoint.retrievePropertiesApi}/$id"));
+      GetSpecificPropertyResponse property = GetSpecificPropertyResponse.fromJson(jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        print("API Done");
+        return property;
+      }else{
+        throw AppConstants.defaultMessageError;
+      }
+    }else{
+      throw AppConstants.internetErrorMessage;
+    }
   }
 
   @override

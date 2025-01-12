@@ -1,6 +1,7 @@
 import 'package:catalyst/Base/enums/base_screen_state.dart';
 import 'package:catalyst/Model/Data/Properties/GetPropertiesResponse.dart';
 import 'package:catalyst/States/properties_tab_state.dart';
+import 'package:catalyst/UI/Screens/Home/Tabs/Properties%20Tab/Properties%20Details/properties_details.dart';
 import 'package:catalyst/Utilities/app_constants.dart';
 import 'package:catalyst/Utilities/app_error.dart';
 import 'package:catalyst/View%20Model/properties_tab_view_model.dart';
@@ -46,7 +47,12 @@ class _PropertiesTabState extends State<PropertiesTab> {
   Widget buildPropertiesList(List<GetPropertiesResponse> properties) {
     return ListView.builder(
       itemBuilder: (context , index){
-        return PropertyCard(property: properties[index]);
+        return InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const PropertiesDetailsScreen()));
+            },
+            child: PropertyCard(property: properties[index])
+        );
       },
       itemCount: properties.length,
       padding: EdgeInsets.all(8),

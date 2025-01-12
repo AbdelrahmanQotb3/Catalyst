@@ -3,7 +3,7 @@ abstract class PropertiesRepository{
 
   Future createProperty();
 
-  Future getSpecificProperty(String id);
+  Future getSpecificProperty(num id);
 
   Future updateProperty(String id);
 
