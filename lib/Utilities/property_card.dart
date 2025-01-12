@@ -13,7 +13,7 @@ class PropertyCard extends StatefulWidget {
 }
 
 class _PropertyCardState extends State<PropertyCard> {
-  final PageController _pageController = PageController();
+  final PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class _PropertyCardState extends State<PropertyCard> {
                 right: 0,
                 child: Center(
                   child: SmoothPageIndicator(
-                    controller: _pageController,
+                    controller: pageController,
                     count: widget.property.images.length,
                     effect: ExpandingDotsEffect(
                       dotWidth: 8.0,
