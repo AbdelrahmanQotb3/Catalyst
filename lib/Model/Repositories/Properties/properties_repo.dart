@@ -5,7 +5,7 @@ abstract class PropertiesRepository{
 
   Future getSpecificProperty(num id);
 
-  Future updateProperty(String id);
+  Future updateProperty(num id);
 
-  Future deleteProperty(String id);
+  Future deleteProperty(num id);
 }

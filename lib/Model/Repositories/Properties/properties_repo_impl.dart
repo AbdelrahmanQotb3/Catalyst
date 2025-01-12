@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:catalyst/Model/Data/Properties/DeletePropertyResponse.dart';
 import 'package:catalyst/Model/Data/Properties/GetPropertiesResponse.dart';
 import 'package:catalyst/Model/Data/Properties/GetSpecificPropertyResponse.dart';
+import 'package:catalyst/Model/Data/Properties/UpdatePropertyResponse.dart';
 import 'package:catalyst/Model/Repositories/Properties/properties_repo.dart';
 import 'package:catalyst/Utilities/app_constants.dart';
 import 'package:catalyst/Utilities/end_points.dart';
@@ -14,15 +16,25 @@ class PropertiesRepositoryImpl extends PropertiesRepository{
   InternetConnectionCheckerPlus internetConnection;
   PropertiesRepositoryImpl(this.internetConnection);
   @override
-  Future createProperty() {
-    // TODO: implement createProperty
-    throw UnimplementedError();
+  Future createProperty() async {
+
   }
 
   @override
-  Future deleteProperty(String id) {
-    // TODO: implement deleteProperty
-    throw UnimplementedError();
+  Future deleteProperty(num id) async {
+    if(await internetConnection.hasConnection){
+      Response response = await delete(Uri.parse("${EndPoint.retrieveUsersApi}/$id"));
+      DeletePropertyResponse deleteProperty = DeletePropertyResponse.fromJson(jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        print("API Done");
+        return deleteProperty;
+      }else{
+        throw AppConstants.defaultMessageError;
+      }
+
+    }else{
+      throw AppConstants.internetErrorMessage;
+    }
   }
 
   @override
@@ -59,9 +71,20 @@ class PropertiesRepositoryImpl extends PropertiesRepository{
   }
 
   @override
-  Future updateProperty(String id) {
-    // TODO: implement updateProperty
-    throw UnimplementedError();
+  Future updateProperty(num id) async{
+    if(await internetConnection.hasConnection){
+      Response response = await post(Uri.parse("${EndPoint.retrieveUsersApi}/$id"));
+      UpdatePropertyResponse updateProperty = UpdatePropertyResponse.fromJson(jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        print("API Done");
+        return deleteProperty;
+      }else{
+        throw AppConstants.defaultMessageError;
+      }
+
+    }else{
+      throw AppConstants.internetErrorMessage;
+    }
   }
 
 }
