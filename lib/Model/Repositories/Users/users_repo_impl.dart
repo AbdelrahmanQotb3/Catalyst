@@ -1,6 +1,10 @@
 import 'dart:convert';
 
+import 'package:catalyst/Model/Data/Users/CreateUserResponse.dart';
+import 'package:catalyst/Model/Data/Users/DeleteUserResponse.dart';
+import 'package:catalyst/Model/Data/Users/GetSpecificUser.dart';
 import 'package:catalyst/Model/Data/Users/GetUsersResponse.dart';
+import 'package:catalyst/Model/Data/Users/UpdateUserResponse.dart';
 import 'package:catalyst/Model/Repositories/Users/users_repo.dart';
 import 'package:catalyst/Utilities/end_points.dart';
 import 'package:http/http.dart';
@@ -14,15 +18,39 @@ class UsersRepositoriesImpl extends UsersRepositories{
   InternetConnectionCheckerPlus internetConnection;
   UsersRepositoriesImpl(this.internetConnection);
   @override
-  Future createNewUser(String name, String email) {
-    // TODO: implement createNewUser
-    throw UnimplementedError();
+  Future createNewUser(String name, String email) async {
+    final Map<String, dynamic> body = {
+      "name": name,
+      "email": email,
+    };
+    if(await internetConnection.hasConnection){
+      Response response = await post(Uri.parse(EndPoint.createUsersApi),body: body);
+      CreateUserResponse newUser = CreateUserResponse.fromJson(jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        print("API Done");
+        return newUser;
+      }else{
+        throw AppConstants.defaultMessageError;
+      }
+    }else{
+      throw AppConstants.internetErrorMessage;
+    }
   }
 
   @override
-  Future deleteUSer(String id) {
-    // TODO: implement deleteUSer
-    throw UnimplementedError();
+  Future deleteUSer(num id) async{
+    if(await internetConnection.hasConnection){
+      Response response = await delete(Uri.parse("${EndPoint.retrieveUsersApi}/$id"));
+      DeleteUserResponse deleteUser = DeleteUserResponse.fromJson(jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        return deleteUser;
+      }
+      else{
+        throw AppConstants.defaultMessageError;
+      }
+    }else{
+      throw AppConstants.internetErrorMessage;
+    }
   }
 
   @override
@@ -44,15 +72,35 @@ class UsersRepositoriesImpl extends UsersRepositories{
   }
 
   @override
-  Future getSpecificUser(String id) {
-    // TODO: implement getSpecificUser
-    throw UnimplementedError();
+  Future getSpecificUser(num id) async {
+    if(await internetConnection.hasConnection){
+      Response response = await get(Uri.parse("${EndPoint.retrieveUsersApi}/$id"));
+      GetSpecificUser oneUser = GetSpecificUser.fromJson(jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        print("API done");
+        return oneUser;
+      }else{
+        throw AppConstants.defaultMessageError;
+      }
+    }else{
+      throw AppConstants.internetErrorMessage;
+    }
   }
 
   @override
-  Future updateUser(String id) {
-    // TODO: implement updateUser
-    throw UnimplementedError();
+  Future updateUser(num id) async {
+    if(await internetConnection.hasConnection){
+      Response response = await post(Uri.parse("${EndPoint.createUsersApi}/$id"));
+      UpdateUserResponse updatedUser = UpdateUserResponse.fromJson(jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        print("API Done");
+        return updatedUser;
+      }else{
+        throw AppConstants.defaultMessageError;
+      }
+    }else{
+      throw AppConstants.internetErrorMessage;
+    }
   }
 
 }

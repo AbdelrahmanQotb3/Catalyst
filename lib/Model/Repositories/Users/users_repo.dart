@@ -5,9 +5,9 @@ abstract class UsersRepositories{
 
   Future createNewUser(String name , String email);
 
-  Future getSpecificUser(String id);
+  Future getSpecificUser(num id);
 
-  Future updateUser(String id);
+  Future updateUser(num id);
 
-  Future deleteUSer(String id);
+  Future deleteUSer(num id);
 }
