@@ -3,7 +3,7 @@ abstract class BookingsRepo {
 
   Future createBooking();
 
-  Future updateBooking(String id);
+  Future updateBooking(num id);
 
-  Future deleteBooking(String id);
+  Future deleteBooking(num id);
 }

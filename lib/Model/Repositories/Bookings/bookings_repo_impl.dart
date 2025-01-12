@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:catalyst/Model/Data/Bookings/CreateBookingResponse.dart';
+import 'package:catalyst/Model/Data/Bookings/DeleteBookingResponse.dart';
 import 'package:catalyst/Model/Data/Bookings/GetBookingsResponse.dart';
+import 'package:catalyst/Model/Data/Bookings/UpdateBookingStatusResponse.dart';
 import 'package:catalyst/Model/Repositories/Bookings/bookings_repo.dart';
 import 'package:catalyst/Utilities/app_constants.dart';
 import 'package:catalyst/Utilities/end_points.dart';
@@ -15,15 +18,35 @@ class BookingsRepoImpl extends BookingsRepo{
   BookingsRepoImpl(this.internetConnection);
 
   @override
-  Future createBooking() {
-    // TODO: implement createBooking
-    throw UnimplementedError();
+  Future createBooking() async {
+    if(await internetConnection.hasConnection){
+      Response response = await post(Uri.parse(EndPoint.retrieveUsersApi));
+      CreateBookingResponse createBooking = CreateBookingResponse.fromJson(jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        print("API Done");
+        return createBooking;
+      }else{
+        throw AppConstants.defaultMessageError;
+      }
+    }else{
+      throw AppConstants.internetErrorMessage;
+    }
   }
 
   @override
-  Future deleteBooking(String id) {
-    // TODO: implement deleteBooking
-    throw UnimplementedError();
+  Future deleteBooking(num id) async {
+    if(await internetConnection.hasConnection){
+      Response response = await delete(Uri.parse("${EndPoint.retrieveUsersApi}/$id"));
+      DeleteBookingResponse deleteBooking = DeleteBookingResponse.fromJson(jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        print("API Done");
+        return deleteBooking;
+      }else{
+        throw AppConstants.defaultMessageError;
+      }
+    }else{
+      throw AppConstants.internetErrorMessage;
+    }
   }
 
   @override
@@ -52,9 +75,19 @@ class BookingsRepoImpl extends BookingsRepo{
 
 
   @override
-  Future updateBooking(String id) {
-    // TODO: implement updateBooking
-    throw UnimplementedError();
+  Future updateBooking(num id) async {
+    if(await internetConnection.hasConnection){
+      Response response = await post(Uri.parse("${EndPoint.retrieveUsersApi}/$id/status"));
+      UpdateBookingStatusResponse updateBookingStatus = UpdateBookingStatusResponse.fromJson(jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        print("API Done");
+        return updateBookingStatus.status;
+      }else{
+        throw AppConstants.defaultMessageError;
+      }
+    }else{
+      throw AppConstants.internetErrorMessage;
+    }
   }
 
 }
