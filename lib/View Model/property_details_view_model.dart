@@ -1,4 +1,3 @@
-
 import 'package:catalyst/Base/enums/base_screen_state.dart';
 import 'package:catalyst/Model/Data/Properties/GetSpecificPropertyResponse.dart';
 import 'package:catalyst/Model/Repositories/Properties/properties_repo.dart';

@@ -25,4 +25,11 @@ abstract class AppConstants{
     fontWeight: FontWeight.w600,
 
   );
+
+  static TextStyle propertyHeader = TextStyle(
+    color: Color(0xff06004F),
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+
+  );
 }
